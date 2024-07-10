@@ -8,3 +8,4 @@ export async function getImages(inputText, page) {
         .catch((error) => console.log("error", error))
     return promiseValue;
 }
+
