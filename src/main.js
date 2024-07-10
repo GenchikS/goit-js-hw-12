@@ -8,7 +8,7 @@ import SimpleLightbox from "simplelightbox";
 // Додатковий імпорт стилів
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-import { getImages } from "./js/pixabay-API";
+import { getImages } from "./js/pixabay-api";
 import { createMarcup } from "./js/render-functions"
 
 const formSearch = document.querySelector(".form");
