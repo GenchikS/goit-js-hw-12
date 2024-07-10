@@ -10,14 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> 
     
     <script type="module" crossorigin src="/goit-js-hw-12/commonHelpers.js"></script>
-    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-b28b8c4e.css">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-c493984e.js">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/vendor-1cd1f9d9.css">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-5bc0859c.css">
   </head>
   <body>
-    <form name="form-search" class="form-search">
-      <input type="text" class="input-search" placeholder="Search images ...">
+    <form name="form-search" class="form">
+      <input type="text" name="input" class="input-search" placeholder="Search images ...">
       <button type="submit" class="button-search">Search</button>
     </form>
-
+    <ul class="gallery"></ul>
+    <button type="submit" class="button-load">Load more</button>
     
   </body>
 </html>
