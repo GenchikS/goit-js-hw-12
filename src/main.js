@@ -14,9 +14,10 @@ import { createMarcup } from "./js/render-functions"
 const formSearch = document.querySelector(".form");
 const gallery = document.querySelector(".gallery");
 const buttonLoad = document.querySelector(".button-load");
+buttonLoad.style.display = "none";
 
 let inputText = "";
-
+let page = 1;
 let userPhoto = new SimpleLightbox('.gallery a', {
     captions: true,
     captionType: 'attr',
@@ -36,7 +37,7 @@ function handlerSubmit(event) {
     if (inputText === "") {
         return
     } else {
-        getImages(inputText)
+        getImages(inputText, page)
             .then((data) => {
                 // console.log("data", data) //  перевірка отриманного масиву
                 if (Number(data.length) === 0) {
@@ -48,11 +49,22 @@ function handlerSubmit(event) {
                 } else {
                     gallery.innerHTML = "";  //  очистка попереднього контенту
                     createMarcup(data);
+                    buttonLoad.style.display = "block";
                     userPhoto.refresh();  //  виклик та можливість зміни фото в модальному вікні
+                }
+                // page += 1;
+                console.log("page=", page);
+                if (page > 1) {
+                    // buttonLoad.style.displey = "block"; 
                 }
             })
             .catch((error) => console.log("error", error))
     }
     form.reset();
 }
-buttonLoad.style.display = "visibility";
+
+buttonLoad.addEventListener(`click`, getImages2(inputText, page))
+
+function getImages2(inputText, page){
+    console.log("getImages2", inputText, page)
+}

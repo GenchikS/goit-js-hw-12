@@ -135,7 +135,7 @@
   height: 40px;
   background-color: #4e75ff;
   margin: 0 auto;
-  display: none;
+  /* display:list-item */
 }
 
 .button-load:hover {
