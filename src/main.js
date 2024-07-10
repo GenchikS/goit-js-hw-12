@@ -14,10 +14,9 @@ import { createMarcup } from "./js/render-functions"
 const formSearch = document.querySelector(".form");
 const gallery = document.querySelector(".gallery");
 const buttonLoad = document.querySelector(".button-load");
-buttonLoad.style.display = "none";
 
 let inputText = "";
-let page = 1;
+let page;
 let userPhoto = new SimpleLightbox('.gallery a', {
     captions: true,
     captionType: 'attr',
@@ -30,6 +29,7 @@ formSearch.addEventListener(`submit`, handlerSubmit);
 
 function handlerSubmit(event) {
     event.preventDefault();
+    page = 1;
     const form = event.target;  
     // console.log("form", form);  //  перевірка доступу до форми
     inputText = (form.elements.input.value).trim();
@@ -39,23 +39,30 @@ function handlerSubmit(event) {
     } else {
         getImages(inputText, page)
             .then((data) => {
-                // console.log("data", data) //  перевірка отриманного масиву
+                // console.log("data", data.hits) //  перевірка отриманного масиву
+                // console.log("total", data.total) //  перевірка отриманного масиву
                 if (Number(data.length) === 0) {
             iziToast.show({
-                message: 'Sorry, there are no images matching your search query. Please try again!',
+                message: "Sorry, there are no images matching your search query. Please try again!",
                 position: `topCenter`,
                 progressBarColor: `rgb(255,0,0)`
             });
                 } else {
                     gallery.innerHTML = "";  //  очистка попереднього контенту
-                    createMarcup(data);
-                    buttonLoad.style.display = "block";
+                    createMarcup(data.hits);
                     userPhoto.refresh();  //  виклик та можливість зміни фото в модальному вікні
                 }
-                // page += 1;
                 console.log("page=", page);
-                if (page > 1) {
-                    // buttonLoad.style.displey = "block"; 
+                if (data.hits.length > 8) {  //  перевірка умави на довжину отриманного масиву
+                    // console.log("page=", page);  //  перевірка лічильника сторінок
+                    buttonLoad.style.display = "block";  //   активація кнопки
+                } else {
+                    buttonLoad.style.display = "none";  //  приховування кнопки
+                    iziToast.show({
+                        message: "We're sorry, but you've reached the end of search results.",
+                        position: `topCenter`,
+                        progressBarColor: `rgb(255,0,0)`
+                });
                 }
             })
             .catch((error) => console.log("error", error))
@@ -63,9 +70,33 @@ function handlerSubmit(event) {
     form.reset();
 }
 
-buttonLoad.addEventListener(`click`, getImages2(inputText, page))
 
-function getImages2(inputText, page){
-    console.log("getImages2", inputText, page)
+buttonLoad.addEventListener(`click`, getImagesLoad)
+
+function getImagesLoad() {
+    page += 1;
+    // console.log("page=", page);  перевірка лічильника сторінок
+    getImages(inputText, page)
+        .then((data) => {
+            // gallery.innerHTML = "";  //  якщо не потрібен скрол, то очистка попереднього контенту
+            createMarcup(data.hits);
+            // console.log("data", data.hits) //  перевірка отриманного масиву
+        })
 }
+
+const scrollCart = document.documentElement.getBoundingClientRect();
+
+window.scrollBy(0, scrollCart.bottom);
+console.log("top", scrollCart.top, "bottom", scrollCart.bottom);
+
+// window.addEventListener(`scroll`, scrollListener)
+
+
+// function scrollListener() {
+//     const scrollCart = document.documentElement.getBoundingClientRect();
+//     console.log("top", scrollCart.top, "bottom", scrollCart.bottom)
+//     if (scrollCart.bottom < document.documentElement.clientHeight + 400) {
+//        console.log(`Bottom`) 
+//     }
+// }
 
