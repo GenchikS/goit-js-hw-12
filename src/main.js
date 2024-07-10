@@ -68,3 +68,4 @@ buttonLoad.addEventListener(`click`, getImages2(inputText, page))
 function getImages2(inputText, page){
     console.log("getImages2", inputText, page)
 }
+
