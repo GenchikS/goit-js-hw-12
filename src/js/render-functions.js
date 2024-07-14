@@ -8,21 +8,21 @@ export function createMarcup(arr) {
         <li class="container-list">
             <a class="gallery-link" href="${largeImageURL}">
             <img class="img-list" src="${webformatURL}" alt="${tags}">
-            <ul class="container-cart">
-                <li class="list-cart">
-                    <p class="likes-cart">Likes</p>
+            <ul class="container-card">
+                <li class="list-card">
+                    <p class="likes-card">Likes</p>
                     <p class="number-likes">${likes}</p>
                 </li>
-                <li class="list-cart">
-                    <p class="views-cart">Views</p>
+                <li class="list-card">
+                    <p class="views-card">Views</p>
                     <p class="number-views">${views}</p>
                 </li>
-                <li class="list-cart">
-                    <p class="comments-cart">comments</p>
+                <li class="list-card">
+                    <p class="comments-card">comments</p>
                     <p class="number-comments">${comments}</p>
                 </li>
-                <li class="list-cart">
-                    <p class="downloads-cart">downloads</p>
+                <li class="list-card">
+                    <p class="downloads-card">downloads</p>
                     <p class="number-downloads">${downloads}</p>
                 </li>
             </ul>

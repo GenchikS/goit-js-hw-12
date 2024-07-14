@@ -83,6 +83,17 @@
   overflow: visible;
 }
 
+.loading{
+  height: 30px;
+  text-align: center;
+}
+
+.loading.hidden{
+  height: 30px;
+  display: none;
+  text-align: center;
+}
+
 .container-list {
   border: 1px solid #808080;
   width: 360px;
@@ -98,7 +109,7 @@
 }
 
 
-.container-cart {
+.container-card {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -108,7 +119,7 @@
   background-color: #fff;
 }
 
-.list-cart {
+.list-card {
   display: flex;
   flex-direction: column;
   font-weight: 600;
@@ -141,3 +152,4 @@
 .button-load:hover {
   background-color: #6c8cff;
 }
+
