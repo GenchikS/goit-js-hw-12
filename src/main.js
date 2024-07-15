@@ -27,6 +27,7 @@ let userPhoto = new SimpleLightbox('.gallery a', {
     captionDelay: 250
 });
 
+
 formSearch.addEventListener(`submit`, handlerSubmit);
 
 async function handlerSubmit(event) {
@@ -38,7 +39,12 @@ async function handlerSubmit(event) {
     // console.log("inputText", inputText);  //  перевірка отриманого значення input
     loadingTextRemove(); //  додавання інформації про завантаження
     if (inputText === "") {
-        return
+        loadingTextAdd();
+        return iziToast.show({
+                message: "Sorry, there are no images matching your search query. Please try again!",
+                position: `topCenter`,
+                progressBarColor: `rgb(255,0,0)`
+            });
     }
 
     try {
@@ -49,23 +55,24 @@ async function handlerSubmit(event) {
                 position: `topCenter`,
                 progressBarColor: `rgb(255,0,0)`
             });
-                } else {
-                    gallery.innerHTML = "";  //  очистка попереднього контенту
-                    createMarcup(data.hits);
-                    userPhoto.refresh();  //  виклик та можливість зміни фото в модальному вікні
-                }
-                // console.log("page=", page);  //  перевірка лічильника сторінки
-                if (data.hits.length > 8) {  //  перевірка умави на довжину отриманного масиву
-                    // console.log("page=", page);  //  перевірка лічильника сторінок
-                    buttonLoad.style.display = "block";  //   активація кнопки
-                } else {
-                    buttonLoad.style.display = "none";  //  приховування кнопки
-                    iziToast.show({
-                        message: "We're sorry, but you've reached the end of search results.",
-                        position: `topCenter`,
-                        progressBarColor: `rgb(255,0,0)`
+        } else {
+            gallery.innerHTML = "";  //  очистка попереднього контенту
+            createMarcup(data.hits);
+            userPhoto.refresh();  //  виклик та можливість зміни фото в модальному вікні
+                
+            // console.log("page=", page);  //  перевірка лічильника сторінки
+            if (data.hits.length > 14) {  //  перевірка умави на довжину отриманного масиву
+                // console.log("page=", page);  //  перевірка лічильника сторінок
+                buttonRemove();  //   активація кнопки
+            } else {
+                buttontAdd();  //  приховування кнопки
+                iziToast.show({
+                    message: "We're sorry, but you've reached the end of search results.",
+                    position: `topCenter`,
+                    progressBarColor: `rgb(255,0,0)`
                 });
-                }
+            }
+        }
         
     } catch (error) {
         console.log("error", error)
@@ -88,22 +95,41 @@ function getImagesLoad() {
             // gallery.innerHTML = "";  //  якщо не потрібен скрол, то очистка попереднього контенту
             loadingTextAdd();  //  видалення інформації про завантаження
             createMarcup(data.hits);
+            if (data.hits.length > 14) {  //  перевірка умави на довжину отриманного масиву
+                // console.log("page=", page);  //  перевірка лічильника сторінок
+                buttonRemove();  //   активація кнопки
+            } else {
+                buttontAdd();  //  приховування кнопки
+                iziToast.show({
+                    message: "We're sorry, but you've reached the end of search results.",
+                    position: `topCenter`,
+                    progressBarColor: `rgb(255,0,0)`
+                });
+            }
             // console.log("data", data.hits) //  перевірка отриманного масиву
             const containerСard = document.querySelector(".container-list");
             const heigthCard = containerСard.getBoundingClientRect().height;
-            console.log("heigthCard", heigthCard)
+            // console.log("heigthCard", heigthCard)  //  перевірка прокрутки
             window.scrollBy({
-                top: heigthCard * 2,
+                top: heigthCard * 2.6,
                 behavior: "smooth",
               });
         })
 }
 
 
-function loadingTextRemove(){ 
+function loadingTextRemove(){   //  ф-ція додавання loading
     loading.classList.remove("hidden")
 }
 
-function loadingTextAdd(){
+function loadingTextAdd(){      //  ф-ція приховування loading
     loading.classList.add("hidden")
+}
+
+function buttonRemove(){   //  ф-ція додавання кнопки Load more
+    buttonLoad.classList.remove("hidden")
+}
+
+function buttontAdd(){      //  ф-ція приховування кнопки Load more
+    buttonLoad.classList.add("hidden")
 }

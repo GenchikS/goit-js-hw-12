@@ -146,10 +146,13 @@
   height: 40px;
   background-color: #4e75ff;
   margin: 0 auto;
-  display: none;
 }
 
 .button-load:hover {
   background-color: #6c8cff;
 }
 
+
+.button-load.hidden{
+  display: none;
+}
